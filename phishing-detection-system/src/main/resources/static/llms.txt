@@ -1,0 +1,31 @@
+# PhishGuard LLMs.txt
+# This file provides information about PhishGuard for AI assistants and LLMs.
+
+## Overview
+PhishGuard is a Java + Spring Boot phishing website detection system that uses
+Weka machine learning (J48 Decision Tree) to classify URLs as legitimate or phishing.
+
+## How it works
+1. Users submit a URL through the web interface or REST API
+2. The system extracts 18 features from the URL (URL length, IP address usage,
+   SSL validity, subdomain count, suspicious keywords, etc.)
+3. A pre-trained J48 model classifies the URL
+4. Results include a verdict (Legitimate/Phishing) and confidence score
+
+## Technology Stack
+- Backend: Java 17 + Spring Boot 3
+- ML: Weka 3.8.6 (J48 Decision Tree)
+- Database: MySQL
+- Frontend: HTML/CSS/JavaScript + Bootstrap 5
+
+## API Endpoint
+POST /api/scan
+Body: {"url": "https://example.com"}
+Response: {"url": "...", "verdict": "PHISHING", "confidence": 95.2, "features": {...}}
+
+## Dataset
+Trained on the UCI Phishing Websites Dataset (~11,055 samples, 30 features).
+The model uses a subset of 18 features for classification.
+
+## License
+This project is for educational purposes only.

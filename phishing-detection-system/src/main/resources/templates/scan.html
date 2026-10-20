@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(pageTitle='Live URL Analyzer', metaDescription='Deterministic offline RFC 3986 lexical inspection and 18-signal phishing scoring engine.', canonicalPath='/scan')}"></head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen" th:with="activePage='scan'">
+
+<!-- Sidebar -->
+<aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+<!-- Main Container with Sidebar Offset -->
+<div class="pl-72">
+    <!-- Header -->
+    <header th:replace="~{fragments/layout :: topbar}"></header>
+
+    <!-- Main Content -->
+    <main class="relative pt-16 bg-surface min-h-screen w-full px-space-lg py-space-lg">
+        <div class="flex flex-col w-full">
+
+            <!-- Breadcrumbs & Tactical System Header -->
+            <header class="flex flex-col gap-space-xs mb-space-lg">
+                <nav aria-label="Breadcrumb" class="flex items-center gap-2">
+                    <a href="/home" class="font-code-sm text-code-sm uppercase tracking-widest text-outline hover:text-on-surface transition-colors">PhishGuard Core</a>
+                    <span class="font-code-sm text-code-sm text-outline-variant">/</span>
+                    <span class="font-code-sm text-code-sm uppercase tracking-widest text-primary font-semibold">Live URL Analyzer</span>
+                    <span class="font-code-sm text-code-sm text-outline-variant">/</span>
+                    <span class="font-label-sm text-label-sm bg-surface-container-high px-space-xs py-0.5 rounded text-secondary font-mono border border-outline-variant/30">STRICT_RFC_3986</span>
+                </nav>
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-xs">
+                    <div>
+                        <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight flex items-center gap-space-sm">
+                            <span>Live URL Analyzer &amp; Heuristic Scanner</span>
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+                            </span>
+                        </h1>
+                        <p class="font-body-md text-body-md text-on-surface-variant max-w-4xl mt-1">
+                            Deterministic offline RFC 3986 lexical inspection and 18-signal J48 scoring engine. Zero outbound HTTP requests or DNS queries performed.
+                        </p>
+                    </div>
+                    <!-- Live Engine Badges -->
+                    <div class="flex items-center flex-wrap gap-2">
+                        <div class="flex items-center gap-2 bg-surface-container-high px-space-sm py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
+                            <span class="material-symbols-outlined text-secondary text-[18px]">lock</span>
+                            <span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-mono font-semibold">Zero-Egress Sandbox</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-surface-container-low px-space-sm py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
+                            <span class="material-symbols-outlined text-primary text-[18px]">memory</span>
+                            <span class="font-label-sm text-label-sm text-on-surface-variant font-mono">JVM 17 LTS • J48 Tree</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- URL Inspection Workbench Card -->
+            <section class="bg-surface-container-low rounded-xl p-space-lg mb-space-lg shadow-md border border-outline-variant/20 relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col gap-space-md relative z-10">
+
+                    <!-- Form Header & Counter -->
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-primary text-[20px]">terminal</span>
+                            <label class="font-headline-md text-headline-md text-on-surface font-semibold" for="urlInput">
+                                Input Inspection Target
+                            </label>
+                            <span class="font-label-sm text-label-sm uppercase bg-surface-container-highest px-2 py-0.5 rounded text-outline ml-2 font-mono">RFC 3986 Stream</span>
+                        </div>
+                        <div class="flex items-center gap-space-sm">
+                            <span class="font-code-sm text-code-sm bg-surface-container px-2 py-1 rounded text-primary border border-outline-variant/30" id="char-counter">
+                                Valid UTF-8 • Local Memory Buffer
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Monospace URL Input Form -->
+                    <form method="post" action="/scan" id="scanForm" class="flex flex-col gap-space-sm">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <div class="flex flex-col md:flex-row gap-space-sm items-stretch">
+                            <div class="relative flex-1">
+                                <div class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center pointer-events-none text-outline font-code-sm text-code-sm">
+                                    <span>URI&gt;</span>
+                                </div>
+                                <input autocomplete="off"
+                                       class="w-full h-12 pl-12 pr-10 bg-surface-container-lowest text-on-surface font-code-lg text-code-lg rounded-lg border border-outline-variant/40 focus:border-primary focus:outline-none transition-all shadow-inner placeholder-outline/60"
+                                       id="urlInput"
+                                       name="url"
+                                       placeholder="e.g. https://paypal-secure-login.example.com/verify or http://my-intranet.net"
+                                       spellcheck="false"
+                                       type="text"
+                                       required>
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors p-1"
+                                        id="quickClearBtn"
+                                        title="Clear input"
+                                        type="button"
+                                        onclick="document.getElementById('urlInput').value = ''; document.getElementById('urlInput').focus();">
+                                    <span class="material-symbols-outlined text-[18px]">close</span>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <button class="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary-container font-headline-md text-body-md font-semibold rounded-lg flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 whitespace-nowrap cursor-pointer"
+                                        id="run-analysis-btn"
+                                        type="submit">
+                                    <span class="material-symbols-outlined text-[20px]">play_arrow</span>
+                                    <span>Analyze URL</span>
+                                    <kbd class="hidden xl:inline-block font-label-sm text-label-sm bg-on-primary-container/20 text-on-primary-container px-1.5 py-0.5 rounded ml-1 font-mono">↵ Enter</kbd>
+                                </button>
+                                <button class="h-12 px-space-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-body-md text-body-md rounded-lg flex items-center gap-1.5 transition-colors border border-outline-variant/30 cursor-pointer"
+                                        id="reset-fixture-btn"
+                                        type="button"
+                                        onclick="document.getElementById('urlInput').value = '';">
+                                    <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+                                    <span class="hidden sm:inline">Reset</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Test Fixture Quick Load Selectors -->
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-space-sm pt-space-xs">
+                        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">tune</span> Test Fixtures:
+                        </span>
+                        <div class="flex items-center flex-wrap gap-2">
+                            <button class="sample-chip px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest rounded text-on-surface-variant font-code-sm text-code-sm transition-all flex items-center gap-1.5 border border-outline-variant/30 cursor-pointer"
+                                    data-sample="https://www.google.com" type="button">
+                                <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                <span>Google (Safe Baseline)</span>
+                            </button>
+                            <button class="sample-chip px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest rounded text-on-surface-variant font-code-sm text-code-sm transition-all flex items-center gap-1.5 border border-outline-variant/30 cursor-pointer"
+                                    data-sample="http://my-company-portal.net" type="button">
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                <span>HTTP Unencrypted (1 Alert · Suspicious)</span>
+                            </button>
+                            <button class="sample-chip px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest rounded text-on-surface-variant font-code-sm text-code-sm transition-all flex items-center gap-1.5 border border-outline-variant/30 cursor-pointer"
+                                    data-sample="https://secure-login-portal.org/auth" type="button">
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                <span>Keyword Flag (1-2 Alerts · Suspicious)</span>
+                            </button>
+                            <button class="sample-chip px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest rounded text-on-surface-variant font-code-sm text-code-sm transition-all flex items-center gap-1.5 border border-outline-variant/30 cursor-pointer"
+                                    data-sample="http://192.168.0.1/login-verify-account" type="button">
+                                <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                <span>IP Host + Keywords (Phishing)</span>
+                            </button>
+                            <button class="sample-chip px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest rounded text-on-surface-variant font-code-sm text-code-sm transition-all flex items-center gap-1.5 border border-outline-variant/30 cursor-pointer"
+                                    data-sample="http://bit.ly/secure-paypal-login" type="button">
+                                <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                <span>Shortener + Phishing Brand</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Assurance & Compliance Notice -->
+                    <div class="bg-surface-container p-space-sm rounded-lg flex items-start gap-space-sm mt-1 border border-outline-variant/20">
+                        <span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">verified_user</span>
+                        <div class="flex flex-col gap-0.5">
+                            <span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Zero Network Egress Guarantee</span>
+                            <p class="font-body-sm text-body-sm text-on-surface-variant">
+                                Input is tokenized exclusively inside local JVM memory using RFC 3986 productions. Credentials and parameters are parsed without leaking external traffic. Target hosts are <strong class="text-on-surface">never contacted</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 3-Stage Pipeline Information Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg mb-space-lg">
+                <div class="bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/20 flex flex-col gap-space-sm shadow-sm hover:bg-surface-container transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary border border-outline-variant/30">
+                        <span class="material-symbols-outlined text-[22px]">scissors</span>
+                    </div>
+                    <span class="font-headline-md text-headline-md text-on-surface font-semibold">Stage 1 · Lexical Tokenization</span>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Normalizes URI grammar: separates scheme, authority credentials, IPv4/IPv6 host literals, ports, path hierarchies, and query markers.
+                    </p>
+                </div>
+
+                <div class="bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/20 flex flex-col gap-space-sm shadow-sm hover:bg-surface-container transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary border border-outline-variant/30">
+                        <span class="material-symbols-outlined text-[22px]">bar_chart</span>
+                    </div>
+                    <span class="font-headline-md text-headline-md text-on-surface font-semibold">Stage 2 · 18 Heuristic Meters</span>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Computes signal vectors: IP detection, suspicious keywords, URL shorteners, dot/hyphen counts, SSL status, and subdomain nesting depth.
+                    </p>
+                </div>
+
+                <div class="bg-surface-container-low p-space-lg rounded-xl border border-outline-variant/20 flex flex-col gap-space-sm shadow-sm hover:bg-surface-container transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary border border-outline-variant/30">
+                        <span class="material-symbols-outlined text-[22px]">cpu</span>
+                    </div>
+                    <span class="font-headline-md text-headline-md text-on-surface font-semibold">Stage 3 · Decision Tree Verdict</span>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Evaluates features against trained Weka J48 model (11,055 UCI records) to compute confidence probability and defensive verdict.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</div>
+
+<!-- Scanning Overlay Modal (Shown on submit) -->
+<div class="scan-overlay fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-md z-50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none" id="scanOverlay" role="status" aria-live="polite">
+    <div class="bg-surface-container-low border border-outline-variant/30 p-space-xl rounded-2xl shadow-2xl flex flex-col items-center gap-space-md max-w-sm w-full mx-space-md text-center">
+        <div class="relative w-16 h-16 flex items-center justify-center">
+            <span class="animate-spin w-16 h-16 rounded-full border-4 border-outline-variant/30 border-t-primary"></span>
+            <span class="material-symbols-outlined text-primary text-[28px] absolute">radar</span>
+        </div>
+        <div class="flex flex-col">
+            <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Evaluating Target URI</h2>
+            <span class="font-code-sm text-code-sm text-outline mt-1 font-mono">Zero-Egress In-Memory Pipeline</span>
+        </div>
+        <div class="w-full flex flex-col gap-2 pt-space-sm font-code-sm text-code-sm text-left">
+            <div class="scan-step flex items-center gap-2 p-2 rounded bg-surface-container/60 text-on-surface-variant border border-outline-variant/20">
+                <span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+                <span>Normalizing RFC 3986 grammar</span>
+            </div>
+            <div class="scan-step flex items-center gap-2 p-2 rounded bg-surface-container/60 text-on-surface-variant border border-outline-variant/20">
+                <span class="material-symbols-outlined text-primary text-[16px]">pending</span>
+                <span>Extracting 18 signal vectors</span>
+            </div>
+            <div class="scan-step flex items-center gap-2 p-2 rounded bg-surface-container/60 text-on-surface-variant border border-outline-variant/20">
+                <span class="material-symbols-outlined text-outline text-[16px]">hourglass_empty</span>
+                <span>Traversing J48 decision tree</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('scanForm');
+    const input = document.getElementById('urlInput');
+    const overlay = document.getElementById('scanOverlay');
+
+    // Fixture click handler
+    document.querySelectorAll('.sample-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            input.value = btn.getAttribute('data-sample');
+            input.focus();
+        });
+    });
+
+    // Form submit overlay activation
+    if (form && overlay) {
+        form.addEventListener('submit', function (e) {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100');
+        });
+    }
+});
+</script>
+
+</body>
+</html>

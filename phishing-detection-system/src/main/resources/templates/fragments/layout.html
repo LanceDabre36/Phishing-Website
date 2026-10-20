@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- ========== HEAD FRAGMENT ========== -->
+<head th:fragment="head(pageTitle, metaDescription, canonicalPath)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | PhishGuard'" >PhishGuard</title>
+    <meta name="description" th:attr="content=${metaDescription}">
+    <link rel="canonical" th:href="${siteBaseUrl + canonicalPath}">
+    <meta name="robots" content="index,follow">
+
+    <meta property="og:site_name" content="PhishGuard">
+    <meta property="og:type" content="website">
+    <meta property="og:title" th:attr="content=${pageTitle} + ' | PhishGuard'">
+    <meta property="og:description" th:attr="content=${metaDescription}">
+    <meta property="og:url" th:attr="content=${siteBaseUrl + canonicalPath}">
+    <meta property="og:image" th:attr="content=${siteBaseUrl + '/images/phishguard-social-card.svg'}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "outline": "#8c909f",
+                    "tertiary": "#ffb3ad",
+                    "secondary-fixed": "#6ffbbe",
+                    "primary-fixed-dim": "#adc6ff",
+                    "surface-container-highest": "#2d3449",
+                    "surface-container": "#171f33",
+                    "surface-container-low": "#131b2e",
+                    "surface-container-high": "#222a3d",
+                    "surface-container-lowest": "#060e20",
+                    "secondary-container": "#00a572",
+                    "surface": "#0b1326",
+                    "on-surface": "#dae2fd",
+                    "on-surface-variant": "#c2c6d6",
+                    "tertiary-container": "#ff5451",
+                    "surface-bright": "#31394d",
+                    "primary-container": "#4d8eff",
+                    "primary": "#adc6ff",
+                    "surface-dim": "#0b1326",
+                    "error-container": "#93000a",
+                    "outline-variant": "#424754",
+                    "error": "#ffb4ab",
+                    "on-secondary": "#003824",
+                    "secondary": "#4edea3",
+                    "on-primary-container": "#00285d",
+                    "background": "#0b1326",
+                    "surface-variant": "#2d3449",
+                    "on-primary": "#002e6a",
+                    "on-background": "#dae2fd",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-tertiary": "#68000a",
+                    "inverse-surface": "#dae2fd",
+                    "inverse-on-surface": "#283044",
+                    "inverse-primary": "#005ac2",
+                    "on-tertiary-container": "#5c0008",
+                    "on-secondary-container": "#00311f",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#adc6ff",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary-fixed": "#ffdad7",
+                    "tertiary-fixed-dim": "#ffb3ad"
+                },
+                borderRadius: {
+                    DEFAULT: "0.125rem",
+                    lg: "0.25rem",
+                    xl: "0.5rem",
+                    full: "0.75rem"
+                },
+                spacing: {
+                    "margin-desktop": "2rem",
+                    "space-lg": "1.25rem",
+                    "space-md": "0.75rem",
+                    "space-xs": "0.25rem",
+                    "space-sm": "0.5rem",
+                    "margin": "1rem",
+                    "gutter-desktop": "1.5rem",
+                    "gutter": "1rem",
+                    "space-xl": "2rem"
+                },
+                fontFamily: {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "code-sm": ["JetBrains Mono"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "code-lg": ["JetBrains Mono"],
+                    "code-md": ["JetBrains Mono"]
+                },
+                fontSize: {
+                    "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                    "headline-md": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                    "label-md": ["11px", { lineHeight: "14px", letterSpacing: "0.06em", fontWeight: "600" }],
+                    "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                    "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                    "code-sm": ["11px", { lineHeight: "14px", fontWeight: "400" }],
+                    "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.08em", fontWeight: "600" }],
+                    "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                    "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                    "code-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                    "code-md": ["12px", { lineHeight: "16px", fontWeight: "500" }]
+                }
+            }
+        }
+    };
+    </script>
+    <link rel="stylesheet" href="/css/soc-theme.css">
+    <script type="application/ld+json" th:utext="${siteSchemaJson}"></script>
+</head>
+
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+
+<!-- ========== SIDEBAR FRAGMENT ========== -->
+<aside th:fragment="sidebar" class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between border-r border-outline-variant/30 sidebar-nav">
+    <div class="flex flex-col">
+        <!-- Brand -->
+        <div class="p-space-lg border-b border-outline-variant/20">
+            <a href="/home" class="flex items-center gap-space-md hover:opacity-90 transition-opacity">
+                <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary-container/20">
+                    <span class="material-symbols-outlined text-primary text-[24px]">shield</span>
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface truncate">PhishGuard Core</span>
+                    <span class="font-code-sm text-code-sm text-outline truncate">v1.0 Java 17 Engine</span>
+                </div>
+            </a>
+            <div class="mt-space-md flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-lg border border-outline-variant/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(78,222,163,0.6)] animate-pulse"></span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Offline Engine Active</span>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex flex-col gap-1 p-space-md">
+            <a th:classappend="${#strings.equals(activePage, 'home')} ? 'bg-surface-container-high text-primary border-l-2 border-primary font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'"
+               class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg transition-all" href="/home">
+                <span class="material-symbols-outlined text-[20px]">security</span>
+                <span class="font-body-md text-body-md">Threat Monitoring</span>
+            </a>
+            <a th:classappend="${#strings.equals(activePage, 'scan')} ? 'bg-surface-container-high text-primary border-l-2 border-primary font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'"
+               class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg transition-all" href="/scan">
+                <span class="material-symbols-outlined text-[20px]">terminal</span>
+                <span class="font-body-md text-body-md">Live URL Analyzer</span>
+            </a>
+            <a th:classappend="${#strings.equals(activePage, 'history')} ? 'bg-surface-container-high text-primary border-l-2 border-primary font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'"
+               class="flex items-center justify-between px-space-md py-space-sm rounded-lg transition-all" href="/history"
+               th:if="${authenticated}">
+                <div class="flex items-center gap-space-md">
+                    <span class="material-symbols-outlined text-[20px]">description</span>
+                    <span class="font-body-md text-body-md">Historical Reports</span>
+                </div>
+            </a>
+            <a th:classappend="${#strings.equals(activePage, 'admin')} ? 'bg-surface-container-high text-primary border-l-2 border-primary font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'"
+               class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg transition-all" href="/admin"
+               th:if="${admin}">
+                <span class="material-symbols-outlined text-[20px]">tune</span>
+                <span class="font-body-md text-body-md">System Config</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Bottom Status -->
+    <div class="p-space-md border-t border-outline-variant/20 flex flex-col gap-space-md bg-surface-container-lowest/80">
+        <div class="bg-surface-container-low p-space-sm rounded-lg border border-outline-variant/30 flex flex-col gap-space-xs">
+            <div class="flex items-center justify-between font-label-sm text-label-sm">
+                <span class="text-outline uppercase">JVM Heap</span>
+                <span class="text-primary font-code-sm">64MB / 512MB</span>
+            </div>
+            <div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+                <div class="bg-primary h-full w-[12.5%]"></div>
+            </div>
+            <div class="flex items-center justify-between font-code-sm text-code-sm pt-1">
+                <span class="text-outline">State</span>
+                <span class="text-secondary flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Offline / Air-Gapped
+                </span>
+            </div>
+        </div>
+        <!-- User Profile / Auth Actions -->
+        <div th:if="${authenticated}" class="flex items-center justify-between p-space-xs bg-surface-container-high/40 rounded-lg">
+            <div class="flex items-center gap-space-sm min-w-0">
+                <div class="w-8 h-8 rounded-full bg-primary-container/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-[18px]">person</span>
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <span class="font-body-sm text-body-sm font-semibold text-on-surface truncate" th:text="${user?.username ?: 'User'}">User</span>
+                    <span class="font-label-sm text-label-sm text-outline truncate">Analyst</span>
+                </div>
+            </div>
+            <form th:action="@{/logout}" method="post" class="inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button class="p-1 text-on-surface-variant hover:text-tertiary transition-colors" type="submit" title="Log out">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                </button>
+            </form>
+        </div>
+        <div th:unless="${authenticated}" class="flex flex-col gap-space-xs">
+            <a href="/login" class="flex items-center justify-center gap-space-xs px-space-md py-space-sm rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-body-sm text-body-sm font-semibold transition-all">
+                <span class="material-symbols-outlined text-[18px]">login</span>
+                <span>Log In</span>
+            </a>
+            <a href="/signup" class="flex items-center justify-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-body-sm text-body-sm transition-all border border-outline-variant/30">
+                <span class="material-symbols-outlined text-[18px]">person_add</span>
+                <span>Create Account</span>
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- ========== HEADER FRAGMENT ========== -->
+<header th:fragment="topbar" class="fixed top-0 left-72 right-0 h-16 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between">
+    <div class="flex items-center gap-space-lg flex-1 max-w-xl">
+        <div class="relative w-full">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
+            <form method="get" action="/scan" class="w-full">
+                <input name="q" class="w-full h-9 pl-9 pr-space-md bg-surface-container-lowest rounded-lg border border-outline-variant/40 font-code-sm text-code-sm text-on-surface placeholder-outline focus:outline-none focus:border-primary transition-all"
+                       placeholder="Search domain, URL, or SHA-256 payload..." type="text">
+            </form>
+        </div>
+        <div class="hidden xl:flex items-center gap-2 whitespace-nowrap bg-surface-container-low px-space-md py-1 rounded-full border border-outline-variant/20">
+            <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+            <span class="font-label-sm text-label-sm text-secondary font-mono uppercase tracking-wider">JVM Healthy</span>
+        </div>
+    </div>
+    <div class="flex items-center gap-space-md">
+        <a href="/scan" class="flex items-center gap-space-xs px-space-md h-9 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-body-sm text-body-sm font-semibold transition-all shadow-[0_0_12px_rgba(77,142,255,0.25)]">
+            <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+            <span>Analyze URL</span>
+        </a>
+    </div>
+</header>
+
+<!-- ========== FOOTER FRAGMENT ========== -->
+<footer th:fragment="footer" class="mt-auto">
+    <div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm text-outline mx-space-lg mb-space-lg">
+        <div class="flex items-center gap-space-md min-w-0">
+            <span class="material-symbols-outlined text-primary text-[20px] shrink-0">info</span>
+            <p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                <strong class="text-on-surface font-semibold">Interpretation Notice:</strong> URL analysis indicates risk based on structural characteristics. Engine runs 100% offline.
+            </p>
+        </div>
+        <div class="flex items-center gap-space-md font-code-sm text-code-sm shrink-0">
+            <span class="text-outline">© 2026 PhishGuard</span>
+            <span class="text-secondary flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Operational
+            </span>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/app.js" defer></script>
+</body>
+</html>

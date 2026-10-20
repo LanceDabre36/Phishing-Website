@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(pageTitle='Internal System Error (500)', metaDescription='The evaluation engine encountered an internal exception.', canonicalPath='/')}"></head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen" th:with="activePage=''">
+
+<aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+<div class="pl-72">
+    <header th:replace="~{fragments/layout :: topbar}"></header>
+
+    <main class="relative pt-16 bg-surface min-h-screen w-full px-space-lg py-space-xl flex items-center justify-center">
+        <div class="bg-surface-container-low border border-tertiary-container/30 p-space-xl rounded-2xl max-w-lg w-full text-center flex flex-col items-center gap-space-md shadow-2xl">
+            <div class="w-16 h-16 rounded-2xl bg-tertiary-container/20 border border-tertiary-container/40 flex items-center justify-center text-tertiary">
+                <span class="material-symbols-outlined text-[36px]">error</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-code-sm text-code-sm text-tertiary font-mono uppercase font-bold tracking-widest">HTTP 500 · INTERNAL ENGINE ERROR</span>
+                <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface mt-1">Pipeline Execution Interrupted</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+                    An unexpected exception was encountered during lexical parsing or decision tree traversal.
+                </p>
+            </div>
+            <div class="flex items-center gap-space-sm pt-space-xs">
+                <a href="/home" class="px-space-md h-10 rounded-lg bg-primary-container text-on-primary-container font-body-sm text-body-sm font-semibold flex items-center gap-2 hover:bg-primary transition-all">
+                    <span class="material-symbols-outlined text-[18px]">home</span>
+                    <span>Return to Monitoring</span>
+                </a>
+                <a href="/scan" class="px-space-md h-10 rounded-lg bg-surface-container-high text-on-surface font-body-sm text-body-sm font-medium border border-outline-variant/30 hover:bg-surface-container-highest transition-colors">
+                    <span>Retry URL Analysis</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</div>
+
+</body>
+</html>

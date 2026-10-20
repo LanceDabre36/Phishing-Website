@@ -1,0 +1,36 @@
+# Maven build output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.flattened-pom.xml
+
+# IDE & Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# OS temporary files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Log files
+*.log
+logs/
+
+# Sensitive or environment files
+*.env
+*.env.local

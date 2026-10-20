@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">PhishGuard URL screening</title>
+  <desc id="desc">A blue shield protects a web address from a phishing hook.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071c35"/><stop offset="1" stop-color="#123d70"/></linearGradient><linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#64d8ff"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/><circle cx="1080" cy="90" r="210" fill="#1d5b9f" opacity=".35"/><circle cx="100" cy="590" r="250" fill="#0c6cb4" opacity=".2"/>
+  <path d="M230 132 410 205v132c0 114-74 203-180 244-106-41-180-130-180-244V205z" fill="url(#shield)"/><path d="m154 329 49 49 91-108" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+  <text x="520" y="250" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700">PhishGuard</text><text x="525" y="325" fill="#b9dcff" font-family="Arial, Helvetica, sans-serif" font-size="34">Understand suspicious links</text><rect x="524" y="385" width="510" height="70" rx="14" fill="#06152a" stroke="#4f9ee8" stroke-width="2"/><text x="555" y="431" fill="#d9edff" font-family="Arial, Helvetica, sans-serif" font-size="28">https://account-check.example</text><circle cx="1002" cy="420" r="15" fill="#fbbf24"/>
+</svg>
